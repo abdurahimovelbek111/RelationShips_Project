@@ -10,8 +10,8 @@ using RelationShips_Project.Data;
 namespace RelationShips_Project.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220722130447_OneToManyRelationShip")]
-    partial class OneToManyRelationShip
+    [Migration("20220722131414_OneToOneRelationShip")]
+    partial class OneToOneRelationShip
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,30 +21,25 @@ namespace RelationShips_Project.Migrations
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("RelationShips_Project.Models.Car", b =>
+            modelBuilder.Entity("RelationShips_Project.Models.Address", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Color")
+                    b.Property<string>("District")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Region")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Number")
+                    b.Property<string>("Village")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("PeopleId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PeopleId");
-
-                    b.ToTable("Cars");
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("RelationShips_Project.Models.People", b =>
@@ -53,6 +48,9 @@ namespace RelationShips_Project.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AddressId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Age")
                         .HasColumnType("int");
@@ -65,19 +63,18 @@ namespace RelationShips_Project.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Peoples");
-                });
+                    b.HasIndex("AddressId");
 
-            modelBuilder.Entity("RelationShips_Project.Models.Car", b =>
-                {
-                    b.HasOne("RelationShips_Project.Models.People", null)
-                        .WithMany("Cars")
-                        .HasForeignKey("PeopleId");
+                    b.ToTable("Peoples");
                 });
 
             modelBuilder.Entity("RelationShips_Project.Models.People", b =>
                 {
-                    b.Navigation("Cars");
+                    b.HasOne("RelationShips_Project.Models.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId");
+
+                    b.Navigation("Address");
                 });
 #pragma warning restore 612, 618
         }
