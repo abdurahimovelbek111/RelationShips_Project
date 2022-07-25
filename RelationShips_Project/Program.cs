@@ -12,6 +12,46 @@ namespace RelationShips_Project
         {
             AppDbContext db = new AppDbContext();
             #region ManyToManyRelationShip
+            //Developer and Companies information add
+            Developer developer = new Developer();
+            developer.FullName = "Elbek Abdurahimov";
+            developer.Proffesion = ".Net Developer";
+
+            Company company = new Company();
+            company.CompanyName = "EPAM";
+            var read_Id = from cust in db.Companies
+                          where cust.CompanyName==company.CompanyName
+                          select cust.Id;
+           
+            foreach (var item in read_Id)
+            {
+                company.Id=int.Parse(item.ToString());
+               
+                Console.WriteLine(company.Id);
+            }
+
+
+
+            //if (company.CompanyName==db.)
+            //{
+
+            //}
+            //else
+            //{
+            //    company.Developers.Add(developer);
+            //    db.Companies.Add(company);
+            //    db.SaveChanges();
+            //}
+            //Console.WriteLine("Malumot saqlandi!!!");
+
+
+
+
+
+
+
+
+
 
 
 
